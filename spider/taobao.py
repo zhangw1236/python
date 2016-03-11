@@ -6,6 +6,7 @@ import sys
 import os
 import cookielib
 
+#dev branch
 class TaobaoMM:
     #初始化方法
     def __init__(self, pageIndex, dir):
