@@ -279,5 +279,4 @@ class TaobaoMM:
         items = self.getContent()
         for item in items:
             self.getDetail(item)
-            return
   
