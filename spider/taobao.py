@@ -6,7 +6,6 @@ import sys
 import os
 import cookielib
 
-#dev branch
 class TaobaoMM:
     #初始化方法
     def __init__(self, pageIndex, dir):
@@ -28,7 +27,7 @@ class TaobaoMM:
         self.ua = '013#JxEAUAAjA9EAAAAAANefAAYBABnDwsHAv4RKHUwHWShGNkYyXi9KFiRTM0EzBgEAGcPCwcC/h3wvfjFvHnwIdARsGXwkEmEBcwEGAQAZw8LBwL+Hs+a1+KjXt8W3wa/cv+HRoP6O/gYBABnDwsHAv4a057b5p9a0wMy81KHEnKrZucu5BgEAGcPCwcC/iDptPHcpWDZGNkIuXzpmVCNDMUMGAQAZw8LBwL+KUwZVGEg3VyVXIU88XwExQF4uXgYBABnDwsHAv4qn8qHstMOj0aPVu8ij/c282qraBgEAGcPCwcC/jSdyIWw0QyNRI1U7SCN9TTxaKloGAQAZw8LBwL+MWg1cF0k4ViZWIk4/WgY0QyNRIxYBAATNzMvKBgEAGcPCwcC/jMaRwPOt3LrKus6i07bq2KfHtccGAQAZw8LBwL+PMHsqZTtKKFQgaAh1EFB+DW0fbRYBAATNzMvKBAEAD8vKIB4A//7tndaKz6HSvAQBAAnNzf78zs3M2/EEAQAPy8uOjLe2taSu57n+kuOPAwEAKM3My8rJyMfGxcTCjo2MiUpJSEEA//7+eXh3cC8uLS9ycXBvbm1sa2oTAQAMz87JyMDLo82igaiODAEAN/vL/sjw2u7V4dbg6tjn3L6I49vsiLKBsJ6ryf/HpcCPv4mx1OKD5tbi0une5NWwzanJ/s6syv4XAQAEzczKyRQBAAbNzY2SGMsBAQAIzczKmse1VFwCAQAGz87Pz/rBCwEAws2Tks6l0LvKuoOtg+6C5ozlyr3ds9Cuwu+N44+hzanFpsDN447ihuyFqsOq3bHc5JH1kOaX85HktueqlPuO+Yj01ufT4aGFtoBNCiwZLR5bLVstAnUVexh2GjdVO1dzQAo7fBNmEWAsET8RfBR0GndYI0MtTixEbQ9hDSNPK0ckRjcZdBx8En9QJUw/Uz4CcxdyGGUBYxZAbSAiSTxPPk5oVWFTEzcENgdAGisfLG0bbRs0RydJKkgoCWsFaU1+SHUyFgEABM3My8oNAQAbx8bLnfWa/ZPll7aEs+Wt4sHywJOijbyXp56vBAEAD8vLwcHo5+b1p+y09ZvoigQBAA/LygMDFhUUA43Gmt+xwqwFAQAaw8Kko1ZVVFNScr696Lf6ptW1x7XDrd6559cHAQAUw8PCweMEVwZJF2YEcBxsBHEUTHoGAQAZw8LBwL+PnM+e0Y/+nOiU5Iz5nMTygeGT4RYBAATNzMvKFgEABM3My8oGAQAZw8LBwL+L47blqPiH55Xnkf+M77GB8I7+jgYBABnDwsHAv4mz5rX4qNe3xbfBr9y/4dGg/o7+'
         #密码，在这里不能输入真实密码，淘宝对此密码进行了加密处理，256位，此处为加密后的密码
         self.password2 = '6da4bcde181b7cf6aa602bbee04c4e23d08d0412b74c25ba2e471e70a425256bf94247eff207d4443c7421855df93756c18bec0ee439e660f9187bf7aa23d9fede7cf8f5e62e730254ce2577a431c6005ed8dd85be1a0e80bbc0f20af2b70d3ac5858ad3839e3b5906efbeac37b16b3dc7d0bf9482872c99a621bf1fda0f7883'
-        self.post = post = {
+        self.post = {
             'ua':self.ua,
             'TPL_checkcode':'',
             'CtrlVersion': '1,0,0,7',
@@ -61,7 +60,7 @@ class TaobaoMM:
             'poy':'',
             'gvfdcname':'10',
             'gvfdcre':'',
-            'from_encoding ':'',
+            'from_encoding':'',
             'sub':'',
             'TPL_password_2':self.password2,
             'loginASR':'1',
@@ -95,7 +94,7 @@ class TaobaoMM:
     #得到是否需要输入验证码，这次请求的相应有时会不同，有时需要验证有时不需要
     def needIdenCode(self):
         #第一次登录获取验证码尝试，构建request
-        request = urllib2.Request(self.loginURL,self.postData,self.loginHeaders)
+        request = urllib2.Request(self.loginURL, self.postData, self.loginHeaders)
         #得到第一次登录尝试的相应
         response = self.opener.open(request)
         #获取其中的内容
@@ -144,7 +143,7 @@ class TaobaoMM:
         response = urllib2.urlopen(request)
         #处理st，获得用户淘宝主页的登录地址
         pattern = re.compile('{"st":"(.*?)"}',re.S)
-        result = re.search(pattern,response.read())
+        result = re.search(pattern, response.read())
         #如果成功匹配
         if result:
             print u"成功获取st码"
@@ -165,7 +164,7 @@ class TaobaoMM:
         request = urllib2.Request(stURL, headers = headers)
         response = self.newOpener.open(request)
         content =  response.read().decode('gbk')
-        #print content
+
         #检测结果，看是否登录成功
         pattern = re.compile('top.location.href = "(.*?)"',re.S)
         match = re.search(pattern,content)
@@ -174,7 +173,7 @@ class TaobaoMM:
             location = match.group(1)
             return True
         else:
-            print "登录失败"
+            print u"登录失败"
             return False
         
     #登录
