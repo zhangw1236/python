@@ -27,4 +27,4 @@ def TBTest():
     taobao.start()
      
 if __name__ == '__main__':
-    TBTest()
+    QSBKTest()
